@@ -8,9 +8,9 @@ from adapters import (
 
 
 def test_internal_source_adapter():
-    client_1 = ClientData(client_id="1", client_name="Ana", client_age=28)
-    client_2 = ClientData(client_id="2", client_name="Bruno", client_age=32)
-    client_3 = ClientData(client_id="3", client_name="Caio", client_age=35)
+    client_1 = ClientData(client_id=1, client_name="Ana", client_age=28)
+    client_2 = ClientData(client_id=2, client_name="Bruno", client_age=32)
+    client_3 = ClientData(client_id=3, client_name="Caio", client_age=35)
 
     internal_source_data = InternalSourceData(
         clients_data=[client_1, client_2, client_3]
