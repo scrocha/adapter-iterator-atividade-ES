@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 import csv
 
 
-def connect_to_api(api_client):
+def connect_to_api(api_client: str) -> list[dict]:
 
     return [
         {"client_id": "1", "client_name": "Alice", "client_age": 30},
@@ -23,7 +23,7 @@ class ClientData:
 class InternalSourceData:
     clients_data: list[ClientData]
 
-    def get_clients(self):
+    def get_clients(self) -> list[dict]:
         result = list()
         for client in self.clients_data:
             result.append(client.__dict__)
@@ -40,7 +40,7 @@ class InternalSourceAdapter(Adapter):
     def __init__(self, source_data: InternalSourceData):
         self._source_data = source_data
 
-    def get_data(self):
+    def get_data(self) -> list[dict]:
         try:
             return self._source_data.get_clients()
         except Exception as e:
@@ -52,7 +52,7 @@ class CSVAdapter(Adapter):
     def __init__(self, file_path: str):
         self._file_path = file_path
 
-    def get_data(self):
+    def get_data(self) -> list[dict]:
         try:
             with open(self._file_path, mode='r', encoding='utf-8') as file:
                 reader = csv.DictReader(file)
@@ -69,7 +69,7 @@ class APIAdapter(Adapter):
     def __init__(self, api_client):
         self._api_client = api_client
 
-    def get_data(self):
+    def get_data(self) -> list[dict]:
         try:
             response = connect_to_api(self._api_client)
             return response
