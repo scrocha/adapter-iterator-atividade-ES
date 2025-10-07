@@ -1,10 +1,30 @@
+"""
+Este módulo contém implementações do padrão Adapter para unificar o acesso a diferentes fontes de dados.
+
+Classes:
+- ClientData: Representa os dados de um cliente.
+- InternalSourceData: Contém dados internos e fornece uma interface para acessá-los.
+- Adapter: Interface abstrata para adaptadores.
+- InternalSourceAdapter: Adaptador para dados internos.
+- CSVAdapter: Adaptador para arquivos CSV.
+- APIAdapter: Adaptador para APIs externas.
+"""
+
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 import csv
 
 
 def connect_to_api(api_client: str) -> list[dict]:
+    """
+    Simula a conexão a uma API externa para obter dados de clientes.
 
+    Parâmetros:
+        api_client (str): Identificador do cliente da API.
+
+    Retorna:
+        list[dict]: Lista de dicionários contendo dados de clientes.
+    """
     return [
         {"client_id": "1", "client_name": "Alice", "client_age": 30},
         {"client_id": "2", "client_name": "João", "client_age": 25},
@@ -14,6 +34,15 @@ def connect_to_api(api_client: str) -> list[dict]:
 
 @dataclass
 class ClientData:
+    """
+    Representa os dados de um cliente.
+
+    Atributos:
+        client_id (str): Identificador único do cliente.
+        client_name (str): Nome do cliente.
+        client_age (int): Idade do cliente.
+    """
+
     client_id: str
     client_name: str
     client_age: int
@@ -21,6 +50,13 @@ class ClientData:
 
 @dataclass
 class InternalSourceData:
+    """
+    Contém dados internos e fornece uma interface para acessá-los.
+
+    Métodos:
+        get_clients() -> list[dict]: Retorna os dados dos clientes como uma lista de dicionários.
+    """
+
     clients_data: list[ClientData]
 
     def get_clients(self) -> list[dict]:
@@ -31,12 +67,26 @@ class InternalSourceData:
 
 
 class Adapter(ABC):
+    """
+    Interface abstrata para adaptadores.
+
+    Métodos abstratos:
+        get_data(): Retorna os dados adaptados.
+    """
+
     @abstractmethod
     def get_data(self):
         pass
 
 
 class InternalSourceAdapter(Adapter):
+    """
+    Adaptador para dados internos.
+
+    Métodos:
+        get_data() -> list[dict]: Retorna os dados internos adaptados.
+    """
+
     def __init__(self, source_data: InternalSourceData):
         self._source_data = source_data
 
@@ -49,6 +99,13 @@ class InternalSourceAdapter(Adapter):
 
 
 class CSVAdapter(Adapter):
+    """
+    Adaptador para arquivos CSV.
+
+    Métodos:
+        get_data() -> list[dict]: Lê e retorna os dados do arquivo CSV.
+    """
+
     def __init__(self, file_path: str):
         self._file_path = file_path
 
@@ -66,6 +123,13 @@ class CSVAdapter(Adapter):
 
 
 class APIAdapter(Adapter):
+    """
+    Adaptador para APIs externas.
+
+    Métodos:
+        get_data() -> list[dict]: Conecta-se à API e retorna os dados.
+    """
+
     def __init__(self, api_client):
         self._api_client = api_client
 
