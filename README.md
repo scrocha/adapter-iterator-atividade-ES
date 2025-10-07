@@ -44,12 +44,11 @@ O padrão Iterator fornece uma maneira de acessar sequencialmente os elementos d
 
 ## Instruções de Execução
 1. Certifique-se de que o Python 3.11 (ou superior) está instalado.
-2. Instale as dependências necessárias (se houver).
-3. Execute o arquivo `main.py` para visualizar os resultados:
+2. Execute o arquivo `main.py` para visualizar os resultados:
    ```bash
    python main.py
    ```
-4. Para rodar os testes unitários, utilize o comando:
+3. Para rodar os testes unitários, utilize o comando:
    ```bash
    pytest tests/
    ```
