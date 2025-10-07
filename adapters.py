@@ -23,6 +23,12 @@ class ClientData:
 class InternalSourceData:
     clients_data: list[ClientData]
 
+    def get_clients(self):
+        result = list()
+        for client in self.clients_data:
+            result.append(client.__dict__)
+        return result
+
 
 class Adapter(ABC):
     @abstractmethod
@@ -36,7 +42,7 @@ class InternalSourceAdapter(Adapter):
 
     def get_data(self):
         try:
-            return self._source_data.clients_data
+            return self._source_data.get_clients()
         except Exception as e:
             print(f"Erro ao acessar dados internos: {e}")
             return list()
