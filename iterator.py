@@ -1,7 +1,13 @@
 class DataIterator:
-    def __init__(self, data: list[dict]):
+    def __init__(
+        self, data: list[dict], sort_key: str = None, reverse: bool = False
+    ):
         self._data = data
         self._index = 0
+        if sort_key:
+            self._data.sort(key=lambda x: int(x[sort_key]))
+        if reverse:
+            self._data.reverse()
 
     def __iter__(self):
         return self
